@@ -14,33 +14,36 @@ void draw() {
 
 class World {
   Robot robot ;
+  Target target ;
   Wall[] walls ;
   int block_size;
 
   World(int block_size ) {
     this.robot = new Robot(5, 5, this);
     this.block_size = block_size;
-    this.walls = new Wall[15];
-    
+    this.target = new Target(int(random(0, width/this.block_size)), int(random(0, height/this.block_size)), this);
+    this.walls = new Wall[90];
+
     for (int x = 0; x < walls.length; x += 1) { // create object walls
-    
       walls[x] = new Wall(int(random(0, width/this.block_size)), int(random(0, height/this.block_size)), this);
-      
+      if ((walls[x].column == robot.column && walls[x].rown == robot.rown) || (walls[x].column == target.column && walls[x].rown == target.rown)) {
+        walls[x] = new Wall(int(random(0, width/this.block_size)), int(random(0, height/this.block_size)), this);
+      }
     }
   }
 
   void draw () {
     this.robot.draw();
+    this.target.draw();
     line(0, 0, width, 0);  // draw world
     for (int x = this.block_size; x < width; x += this.block_size) {
       line(x, 0, x, height);
       line(0, x, width, x);
     }
-    
+
     for (int i = 0; i < walls.length; i +=1) walls[i].draw(); //draw walls
-    
   }
-  
+
   void update() {   
     if (keyPressed) {  // pressed key
       delay(200);
@@ -50,15 +53,12 @@ class World {
     }
     this.draw();
   }
-  
-  void save(){
-  
+
+  void save() {
   }
-  
-  void load(){
-  
+
+  void load() {
   }
-  
 }
 
 class Robot {
@@ -132,17 +132,14 @@ class Robot {
 
   void move() {
 
-    
+
     if (this.direction == 'w') {
       if (this.rown > 0 ) this.rown -= 1 ;
-    } 
-    else if (this.direction == 'd') {
+    } else if (this.direction == 'd') {
       if (this.column < width/world.block_size-1 ) this.column += 1;
-    } 
-    else if (this.direction == 's') {
+    } else if (this.direction == 's') {
       if (this.rown < height/world.block_size-1 ) this.rown += 1;
-    } 
-    else if (this.direction == 'a') {
+    } else if (this.direction == 'a') {
       if (this.column > 0 )this.column -= 1;
     }
   }
@@ -172,48 +169,58 @@ class Robot {
   }
 }
 
-class Target{
-  
-  Target(int column, int rown){
-      
+class Target {
+  World world ;
+  float column, rown;
+  Target(int column, int rown, World world) {
+    this.column = column ;
+    this.rown = rown;
+    this.world = world;
   }
-  
-  void draw(){
-  
+
+  void draw() {
+    fill(0);
+    this.polygon(world.block_size/2 + (world.block_size*this.column), world.block_size/2 + (world.block_size*this.rown), world.block_size/2, 6);
   }
-  
+
+  void polygon(float x, float y, float radius, int npoints) {
+    float angle = TWO_PI / npoints;
+    beginShape();
+    for (float a = 0; a < TWO_PI; a += angle) {
+      float sx = x + cos(a) * radius;
+      float sy = y + sin(a) * radius;
+      vertex(sx, sy);
+    }
+    endShape(CLOSE);
+  }
 }
 
-class Wall{
+class Wall {
   World world;
   float column, rown;
-  
-  Wall(int column, int rown , World world){
+
+  Wall(int column, int rown, World world) {
     this.column = column;
     this.rown = rown;
     this.world = world;
   }
-  
-  void draw(){
+
+  void draw() {
     fill(50, 50);
     rect((world.block_size*this.column), (world.block_size*this.rown), world.block_size, world.block_size);
   }
 }
 
 class InputProcessor {
-  InputProcessor(char move_key, char turn_left, char turn_riht){
-    
+  InputProcessor(char move_key, char turn_left, char turn_riht) {
   }
-  
-  void get_move_key(){
-  
+
+  void get_move_key() {
   }
-  
-  void get_turn_left(){
-  
+
+  void get_turn_left() {
   }
-  
-  void get_turn_right(){
-  
+
+  void get_turn_right() {
   }
 }
