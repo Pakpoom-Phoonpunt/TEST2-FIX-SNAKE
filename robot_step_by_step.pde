@@ -49,8 +49,19 @@ class World {
       delay(200);
       if (key == 'd') robot.left();
       else if (key == 'a') robot.right();
-      else if (key == 'w') robot.move();
+      else if (key == 'w') robot.move(walls);
     }
+    
+    if (robot.column == target.column && robot.rown == target.rown) {  // robot hit target
+      target = new Target(int(random(0, width/this.block_size)), int(random(0, height/this.block_size)), this);
+      for (int i = 0; i < this.walls.length; i +=1) {
+        if ((walls[i].column == target.column && walls[i].rown == target.rown) || robot.column == target.column && robot.rown == target.rown) {
+          target = new Target(int(random(0, width/this.block_size)), int(random(0, height/this.block_size)), this);
+        }
+      }
+
+    }
+    
     this.draw();
   }
 
@@ -130,17 +141,33 @@ class Robot {
     }
   }
 
-  void move() {
-
-
+  void move(Wall[] walls) {
+    
+    boolean check = true ;
+    
     if (this.direction == 'w') {
-      if (this.rown > 0 ) this.rown -= 1 ;
-    } else if (this.direction == 'd') {
-      if (this.column < width/world.block_size-1 ) this.column += 1;
-    } else if (this.direction == 's') {
-      if (this.rown < height/world.block_size-1 ) this.rown += 1;
-    } else if (this.direction == 'a') {
-      if (this.column > 0 )this.column -= 1;
+      for (int i = 0; i < walls.length; i += 1) { // check wall at the font
+        if (walls[i].rown == this.rown - 1 && walls[i].column == this.column) check = false;
+      }
+      if (this.rown > 0 && check) this.rown -= 1 ;
+    } 
+    else if (this.direction == 'd') {
+      for (int i = 0; i < walls.length; i += 1) { // check wall at the right
+        if (walls[i].rown == this.rown && walls[i].column == this.column + 1) check = false;
+      }
+      if (this.column < width/world.block_size-1 && check) this.column += 1;
+    } 
+    else if (this.direction == 's') {
+      for (int i = 0; i < walls.length; i += 1) { // check wall at below
+        if (walls[i].rown == this.rown + 1 && walls[i].column == this.column) check = false;
+      }
+      if (this.rown < height/world.block_size-1 && check) this.rown += 1;
+    } 
+    else if (this.direction == 'a') {
+      for (int i = 0; i < walls.length; i += 1) { // check wall at the left
+        if (walls[i].rown == this.rown && walls[i].column == this.column - 1) check = false;
+      }
+      if (this.column > 0 && check)this.column -= 1;
     }
   }
 
