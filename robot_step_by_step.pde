@@ -17,12 +17,14 @@ class World {
   Target target ;
   Wall[] walls ;
   int block_size;
+  InputProcessor input;
 
   World(int block_size ) {
     this.robot = new Robot(5, 5, this);
     this.block_size = block_size;
     this.target = new Target(int(random(0, width/this.block_size)), int(random(0, height/this.block_size)), this);
     this.walls = new Wall[90];
+    this.input = new InputProcessor('s', 'd', 'a');
 
     for (int x = 0; x < walls.length; x += 1) { // create object walls
       walls[x] = new Wall(int(random(0, width/this.block_size)), int(random(0, height/this.block_size)), this);
@@ -47,9 +49,9 @@ class World {
   void update() {   
     if (keyPressed) {  // pressed key
       delay(200);
-      if (key == 'd') robot.left();
-      else if (key == 'a') robot.right();
-      else if (key == 'w') robot.move(walls);
+      if (key == this.input.get_turn_left()) robot.left();
+      else if (key == this.input.get_turn_right()) robot.right();
+      else if (key == this.input.get_move_key()) robot.move(walls);
     }
     
     if (robot.column == target.column && robot.rown == target.rown) {  // robot hit target
@@ -239,15 +241,23 @@ class Wall {
 }
 
 class InputProcessor {
-  InputProcessor(char move_key, char turn_left, char turn_riht) {
+  char move_key, turn_left, turn_right;
+  
+  InputProcessor(char move_key, char turn_left, char turn_right) {
+    this.move_key = move_key;
+    this.turn_left = turn_left;
+    this.turn_right = turn_right;
   }
 
-  void get_move_key() {
+  char get_move_key() {
+    return this.move_key;
   }
 
-  void get_turn_left() {
+  char get_turn_left() {
+    return this.turn_left;
   }
 
-  void get_turn_right() {
+  char get_turn_right() {
+    return this.turn_right;
   }
 }
