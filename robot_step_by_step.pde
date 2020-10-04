@@ -76,6 +76,11 @@ class World {
         delay(300);
         this.save("my_world");
       }
+      if(mouseX > width - this.block_size*2 && mouseX < width && mouseY > height - (this.block_size*2) && mouseY < height - this.block_size){
+          print("load");
+          delay(300);
+          this.load("my_world");
+      }
     }
 
     this.draw();
@@ -95,7 +100,27 @@ class World {
     save.close();
   }
 
-  void load() {
+  void load( String load_file ) {
+    String[] all_lines = loadStrings(load_file);
+    String[] line_1 = split(all_lines[0], '=');
+    this.block_size = int(line_1[1]);
+    
+    String[] line_2 = split(all_lines[1], '=');
+    String[] robot_column_rown = split(line_2[1], ',');
+    this.robot = new Robot(int(robot_column_rown[0]), int(robot_column_rown[1]), this);
+    
+    String[] line_3 = split(all_lines[2], '=');
+    String[] target_column_rown = split(line_3[1], ',');
+    this.target = new Target(int(target_column_rown[0]), int(target_column_rown[1]), this);
+    
+    String[] line_4 = split(all_lines[3], '=');
+    String[] input_data = split(line_4[1], ',');
+    this.input = new InputProcessor(input_data[0].charAt(0), input_data[1].charAt(0),input_data[2].charAt(0)); 
+    
+    for(int i = 4 ; i<walls.length+4 ; i++){
+      String[] wall_column_rown = split(all_lines[i],',');
+      walls[i-4] = new Wall(int(wall_column_rown[0]), int (wall_column_rown[1]),this);
+    }
   }
 }
 
