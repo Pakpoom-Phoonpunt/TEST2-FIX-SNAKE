@@ -23,8 +23,8 @@ class World {
     this.robot = new Robot(5, 5, this);
     this.block_size = block_size;
     this.target = new Target(int(random(0, width/this.block_size)), int(random(0, height/this.block_size)), this);
-    this.walls = new Wall[90];
-    this.input = new InputProcessor('s', 'd', 'a');
+    this.walls = new Wall[100];
+    this.input = new InputProcessor('w', 'd', 'a');
 
     for (int x = 0; x < walls.length; x += 1) { // create object walls
       walls[x] = new Wall(int(random(0, width/this.block_size)), int(random(0, height/this.block_size)), this);
@@ -44,6 +44,14 @@ class World {
     }
 
     for (int i = 0; i < walls.length; i +=1) walls[i].draw(); //draw walls
+    stroke(#FF7F50);
+    noFill();
+    rect(width - this.block_size*2, height - this.block_size, this.block_size*2, this.block_size);
+    rect(width - this.block_size*2, height - (this.block_size*2), this.block_size*2, this.block_size);
+    stroke(0);
+    fill(#FF7F50);
+    text("Save", width - this.block_size * 2 + 15, height-10);
+    text("Load", width - this.block_size * 2 + 15, height-60);
   }
 
   void update() {   
@@ -53,7 +61,7 @@ class World {
       else if (key == this.input.get_turn_right()) robot.right();
       else if (key == this.input.get_move_key()) robot.move(walls);
     }
-    
+
     if (robot.column == target.column && robot.rown == target.rown) {  // robot hit target
       target = new Target(int(random(0, width/this.block_size)), int(random(0, height/this.block_size)), this);
       for (int i = 0; i < this.walls.length; i +=1) {
@@ -61,13 +69,30 @@ class World {
           target = new Target(int(random(0, width/this.block_size)), int(random(0, height/this.block_size)), this);
         }
       }
-
     }
-    
+    if (mousePressed) {
+      if (mouseX > width - this.block_size*2 && mouseX < width && mouseY > height - this.block_size && mouseY < height) {
+        print("save");
+        delay(300);
+        this.save("my_world");
+      }
+    }
+
     this.draw();
   }
 
-  void save() {
+  void save(String save_file) {
+    PrintWriter save;
+    save = createWriter(save_file);
+    save.println("block_size="+this.block_size);
+    save.println("robot="+this.robot.column+","+this.robot.rown);
+    save.println("target="+target.column+","+target.rown);
+    save.println("input_pro="+input.move_key+","+input.turn_left+","+input.turn_right);    
+    for (int i = 0; i < this.walls.length; i++) {
+      save.println(walls[i].column+","+walls[i].rown);
+    }
+    save.flush(); // Writes the remaining data to the file
+    save.close();
   }
 
   void load() {
@@ -144,28 +169,25 @@ class Robot {
   }
 
   void move(Wall[] walls) {
-    
+
     boolean check = true ;
-    
+
     if (this.direction == 'w') {
       for (int i = 0; i < walls.length; i += 1) { // check wall at the font
         if (walls[i].rown == this.rown - 1 && walls[i].column == this.column) check = false;
       }
       if (this.rown > 0 && check) this.rown -= 1 ;
-    } 
-    else if (this.direction == 'd') {
+    } else if (this.direction == 'd') {
       for (int i = 0; i < walls.length; i += 1) { // check wall at the right
         if (walls[i].rown == this.rown && walls[i].column == this.column + 1) check = false;
       }
       if (this.column < width/world.block_size-1 && check) this.column += 1;
-    } 
-    else if (this.direction == 's') {
+    } else if (this.direction == 's') {
       for (int i = 0; i < walls.length; i += 1) { // check wall at below
         if (walls[i].rown == this.rown + 1 && walls[i].column == this.column) check = false;
       }
       if (this.rown < height/world.block_size-1 && check) this.rown += 1;
-    } 
-    else if (this.direction == 'a') {
+    } else if (this.direction == 'a') {
       for (int i = 0; i < walls.length; i += 1) { // check wall at the left
         if (walls[i].rown == this.rown && walls[i].column == this.column - 1) check = false;
       }
@@ -242,7 +264,7 @@ class Wall {
 
 class InputProcessor {
   char move_key, turn_left, turn_right;
-  
+
   InputProcessor(char move_key, char turn_left, char turn_right) {
     this.move_key = move_key;
     this.turn_left = turn_left;
