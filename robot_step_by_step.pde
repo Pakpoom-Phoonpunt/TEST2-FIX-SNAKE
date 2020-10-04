@@ -14,12 +14,19 @@ void draw() {
 
 class World {
   Robot robot ;
+  Wall[] walls ;
   int block_size;
 
   World(int block_size ) {
     this.robot = new Robot(5, 5, this);
     this.block_size = block_size;
-   
+    this.walls = new Wall[15];
+    
+    for (int x = 0; x < walls.length; x += 1) { // create object walls
+    
+      walls[x] = new Wall(int(random(0, width/this.block_size)), int(random(0, height/this.block_size)), this);
+      
+    }
   }
 
   void draw () {
@@ -29,6 +36,9 @@ class World {
       line(x, 0, x, height);
       line(0, x, width, x);
     }
+    
+    for (int i = 0; i < walls.length; i +=1) walls[i].draw(); //draw walls
+    
   }
   
   void update() {   
@@ -175,13 +185,18 @@ class Target{
 }
 
 class Wall{
+  World world;
+  float column, rown;
   
-  Wall(int column, int rown){
-    
+  Wall(int column, int rown , World world){
+    this.column = column;
+    this.rown = rown;
+    this.world = world;
   }
   
   void draw(){
-    
+    fill(50, 50);
+    rect((world.block_size*this.column), (world.block_size*this.rown), world.block_size, world.block_size);
   }
 }
 
