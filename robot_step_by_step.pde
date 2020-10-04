@@ -1,15 +1,38 @@
-class World{
-  
-  World(int block_size){
-  
+World world;
+
+void setup() {
+  size(1200, 600); 
+  background(255);
+  world = new World(50);
+  world.update();
+}
+
+void draw() {
+  world.update();
+}
+
+
+class World {
+
+  int block_size;
+
+  World(int block_size ) {
+
+    this.block_size = block_size;
+   
+  }
+
+  void draw () {
+
+    line(0, 0, width, 0);  // draw world
+    for (int x = this.block_size; x < width; x += this.block_size) {
+      line(x, 0, x, height);
+      line(0, x, width, x);
+    }
   }
   
-  void draw(){
-  
-  }
-  
-  void update(){
-    
+  void update() {   
+    this.draw();
   }
   
   void save(){
