@@ -1,0 +1,29 @@
+commit 4ea20e648e177afe6deb16e355b93473fd9c4df0
+Author: Charnchanok Thuppasutthi <s6201012620058@email.kmutnb.ac.th>
+Date:   Thu Oct 1 23:59:50 2020 +0700
+
+    Random Wall and Target
+
+commit e8398428badb7162c6c0705d6bd39a1f6f13f71a
+Author: Nipon Kamfoy <s6201012630061@email.kmutnb.ac.th>
+Date:   Thu Oct 1 19:45:58 2020 +0700
+
+    add movement of robot
+
+commit dbb22906ce1889c57d9c59e3b6303c809d132856
+Author: pakpoom <s6201012620210@email.kmutnb.ac.th>
+Date:   Thu Oct 1 18:28:44 2020 +0700
+
+    robot move and draw and turn
+
+commit 673ab1968bf964bab9e9c0e4b00baec5b968083c
+Author: Nipon Kamfoy <s6201012630061@email.kmutnb.ac.th>
+Date:   Thu Oct 1 18:06:36 2020 +0700
+
+    fix commit
+
+commit 3530c3ccc22fd77c32f859502320602c6d534844
+Author: Nipon Kamfoy <s6201012630061@email.kmutnb.ac.th>
+Date:   Thu Oct 1 18:04:41 2020 +0700
+
+    create octagon at random position
