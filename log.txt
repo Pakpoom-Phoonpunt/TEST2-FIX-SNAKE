@@ -1,0 +1,65 @@
+commit 574687f020c5063d45c3aecf3cb48b531deb9c21
+Author: Nipon Kamfoy <s6201012630061@email.kmutnb.ac.th>
+Date:   Tue Oct 6 11:37:14 2020 +0700
+
+    add file log.txt of old file
+
+commit e07dd7851d8bfa44a154845863580f1e2f7d729c
+Author: Nipon Kamfoy <s6201012630061@email.kmutnb.ac.th>
+Date:   Tue Oct 6 11:26:42 2020 +0700
+
+    add old file
+
+commit 372342f7b125f38b92e2baf430a8b94c6083e8f3
+Author: pakpoom <s6201012620210@email.kmutnb.ac.th>
+Date:   Sun Oct 4 22:29:13 2020 +0700
+
+    add load world method
+
+commit 8f0dd598b0a1e0ab31fc8c428df381cfe0cfffa3
+Author: Charnchanok Thuppasutthi <s6201012620058@email.kmutnb.ac.th>
+Date:   Sun Oct 4 20:22:06 2020 +0700
+
+    add save world method
+
+commit 6693033f9f3796afd2f133a4ea00bffbc8d06aed
+Author: pakpoom <s6201012620210@email.kmutnb.ac.th>
+Date:   Sun Oct 4 19:54:26 2020 +0700
+
+    add input class
+
+commit b8e2b5c74c0f3829bb95f269305a427570a8c10a
+Author: Nipon Kamfoy <s6201012630061@email.kmutnb.ac.th>
+Date:   Sun Oct 4 19:22:34 2020 +0700
+
+    add condition of movement when hit the walls or target
+
+commit b6ec147288513cac4cd476f7efa6d31e2e9ab9eb
+Author: Charnchanok Thuppasutthi <s6201012620058@email.kmutnb.ac.th>
+Date:   Sun Oct 4 19:11:44 2020 +0700
+
+    Add Target Object Fix Stack Objects
+
+commit b642958f8ca2359b096a9f853f9f23639f497864
+Author: pakpoom <s6201012620210@email.kmutnb.ac.th>
+Date:   Sun Oct 4 18:19:24 2020 +0700
+
+    draw wall array object in class world
+
+commit 7267de8c316e05f2e641b4644cdf38f06edab121
+Author: Nipon Kamfoy <s6201012630061@email.kmutnb.ac.th>
+Date:   Sun Oct 4 17:36:58 2020 +0700
+
+    create robot and add movement
+
+commit e24349a3ed42b547c6206ab13b336190fae21c73
+Author: Nipon Kamfoy <s6201012630061@email.kmutnb.ac.th>
+Date:   Sun Oct 4 17:30:28 2020 +0700
+
+    create robot's world
+
+commit 38924e65c5f197f197e8ef98a08f30f0b6c767c2
+Author: Nipon Kamfoy <s6201012630061@email.kmutnb.ac.th>
+Date:   Sun Oct 4 17:27:29 2020 +0700
+
+    class design

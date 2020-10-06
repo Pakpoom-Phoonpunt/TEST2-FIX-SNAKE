@@ -1,5 +1,5 @@
 block_size=50
-robot=7,5
+robot=7,2
 target=6.0,7.0
 input_pro=w,d,a
 16.0,10.0
