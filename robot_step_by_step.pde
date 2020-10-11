@@ -55,13 +55,6 @@ class World {
   }
 
   void update() {   
-    if (keyPressed) {  // pressed key
-      delay(200);
-      if (key == this.input.get_turn_left()) robot.left();
-      else if (key == this.input.get_turn_right()) robot.right();
-      else if (key == this.input.get_move_key()) robot.move(walls);
-    }
-
     if (robot.column == target.column && robot.rown == target.rown) {  // robot hit target
       target = new Target(int(random(0, width/this.block_size)), int(random(0, height/this.block_size)), this);
       for (int i = 0; i < this.walls.length; i +=1) {
@@ -70,19 +63,7 @@ class World {
         }
       }
     }
-    if (mousePressed) {
-      if (mouseX > width - this.block_size*2 && mouseX < width && mouseY > height - this.block_size && mouseY < height) {
-        print("save");
-        delay(300);
-        this.save("my_world");
-      }
-      if(mouseX > width - this.block_size*2 && mouseX < width && mouseY > height - (this.block_size*2) && mouseY < height - this.block_size){
-          print("load");
-          delay(300);
-          this.load("my_world");
-      }
-    }
-
+    input.detect();
     this.draw();
   }
 
@@ -193,31 +174,21 @@ class Robot {
     }
   }
 
-  void move(Wall[] walls) {
-
-    boolean check = true ;
+  void move() {
 
     if (this.direction == 'w') {
-      for (int i = 0; i < walls.length; i += 1) { // check wall at the font
-        if (walls[i].rown == this.rown - 1 && walls[i].column == this.column) check = false;
-      }
-      if (this.rown > 0 && check) this.rown -= 1 ;
-    } else if (this.direction == 'd') {
-      for (int i = 0; i < walls.length; i += 1) { // check wall at the right
-        if (walls[i].rown == this.rown && walls[i].column == this.column + 1) check = false;
-      }
-      if (this.column < width/world.block_size-1 && check) this.column += 1;
-    } else if (this.direction == 's') {
-      for (int i = 0; i < walls.length; i += 1) { // check wall at below
-        if (walls[i].rown == this.rown + 1 && walls[i].column == this.column) check = false;
-      }
-      if (this.rown < height/world.block_size-1 && check) this.rown += 1;
-    } else if (this.direction == 'a') {
-      for (int i = 0; i < walls.length; i += 1) { // check wall at the left
-        if (walls[i].rown == this.rown && walls[i].column == this.column - 1) check = false;
-      }
-      if (this.column > 0 && check)this.column -= 1;
+      if (this.rown > 0 && this.isBlocked()) this.rown -= 1 ;
+    } 
+    else if (this.direction == 'd') {
+      if (this.column < width/world.block_size-1 && this.isBlocked()) this.column += 1;
+    } 
+    else if (this.direction == 's') {
+      if (this.rown < height/world.block_size-1 && this.isBlocked()) this.rown += 1;
+    } 
+    else if (this.direction == 'a') {
+      if (this.column > 0 && this.isBlocked())this.column -= 1;
     }
+    
   }
 
   void left() {
@@ -242,6 +213,33 @@ class Robot {
       }
     }
     background(255);
+  }
+  
+  Boolean isBlocked(){
+    
+    Boolean check = true ;
+    
+    if (this.direction == 'w') {
+      for (int i = 0; i < world.walls.length; i += 1) { // check wall at the font
+        if (world.walls[i].rown == this.rown - 1 && world.walls[i].column == this.column) check = false;
+      }
+    }
+    else if (this.direction == 'd') {
+      for (int i = 0; i < world.walls.length; i += 1) { // check wall at the right
+        if (world.walls[i].rown == this.rown && world.walls[i].column == this.column + 1) check = false;
+      }
+    } 
+    else if (this.direction == 's') {
+      for (int i = 0; i < world.walls.length; i += 1) { // check wall at below
+        if (world.walls[i].rown == this.rown + 1 && world.walls[i].column == this.column) check = false;
+      }
+    } 
+    else if (this.direction == 'a') {
+      for (int i = 0; i < world.walls.length; i += 1) { // check wall at the left
+        if (world.walls[i].rown == this.rown && world.walls[i].column == this.column - 1) check = false;
+      }
+    }
+    return check ;
   }
 }
 
@@ -296,15 +294,24 @@ class InputProcessor {
     this.turn_right = turn_right;
   }
 
-  char get_move_key() {
-    return this.move_key;
-  }
-
-  char get_turn_left() {
-    return this.turn_left;
-  }
-
-  char get_turn_right() {
-    return this.turn_right;
+  void detect(){
+    if (keyPressed) {  // pressed key
+      delay(200);
+      if (key == this.turn_left) world.robot.left();
+      else if (key == this.turn_right) world.robot.right();
+      else if (key == this.move_key) world.robot.move();
+    }
+    if (mousePressed){
+      if(mouseX > width - world.block_size*2 && mouseX < width && mouseY > height - world.block_size && mouseY < height){
+           print("save");
+           delay(300);
+           world.save("my_world");
+        }
+      if(mouseX > width - world.block_size*2 && mouseX < width && mouseY > height - (world.block_size*2) && mouseY < height - world.block_size){
+          print("load");
+          delay(300);
+          world.load("my_world");
+      }
+    }
   }
 }
