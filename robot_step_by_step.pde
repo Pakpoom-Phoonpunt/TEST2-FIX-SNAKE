@@ -128,7 +128,9 @@ class Robot {
     float[] point6 = new float[2];
     float[] point7 = new float[2];
     float[] point8 = new float[2];
+    
     background(255);
+    
     point1[0] = this.column * world.block_size ;
     point1[1] = this.rown * world.block_size ;
 
@@ -152,25 +154,15 @@ class Robot {
 
     point8[0] = (this.column * world.block_size);
     point8[1] = (this.rown * world.block_size) + (world.block_size/2);
+    
     if (this.direction == 'w') {
-      line(point2[0], point2[1], point5[0], point5[1]);
-      line(point5[0], point5[1], point7[0], point7[1]);
-      line(point7[0], point7[1], point2[0], point2[1]);
+      triangle(point2[0], point2[1], point5[0], point5[1], point7[0], point7[1]);
     } else if (this.direction == 'd') {
-      line(point1[0], point1[1], point4[0], point4[1]);
-      line(point4[0], point4[1], point7[0], point7[1]);
-      line(point7[0], point7[1], point1[0], point1[1]);
-      //triangle(point1[0], point1[1], point4[0], point4[1], point7[0], point7[1]);
+      triangle(point1[0], point1[1], point4[0], point4[1], point7[0], point7[1]);
     } else if (this.direction == 's') {
-      line(point1[0], point1[1], point3[0], point3[1]);
-      line(point3[0], point3[1], point6[0], point6[1]);
-      line(point6[0], point6[1], point1[0], point1[1]);
-      //triangle(point1[0], point1[1], point3[0], point3[1], point6[0], point6[1]);
+      triangle(point1[0], point1[1], point3[0], point3[1], point6[0], point6[1]);
     } else if (this.direction == 'a') {
-      line(point8[0], point8[1], point3[0], point3[1]);
-      line(point3[0], point3[1], point5[0], point5[1]);
-      line(point5[0], point5[1], point8[0], point8[1]);
-      //triangle(point8[0], point8[1], point3[0], point3[1], point5[0], point5[1]);
+      triangle(point8[0], point8[1], point3[0], point3[1], point5[0], point5[1]);
     }
   }
 
