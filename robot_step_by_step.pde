@@ -307,3 +307,22 @@ class InputProcessor {
     }
   }
 }
+
+class Snake () {
+
+  Robot r ;
+  Robot[] robots;
+  int body ;
+  
+  Snake(){
+  this.r = = new Robot(5, 5, world);
+  this.body = 4;
+  this.robots = new Robot[body];
+  }
+  
+  void drawbody(){
+  int tempx,tempy;
+  tempx
+  
+  }
+}
